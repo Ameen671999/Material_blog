@@ -16,6 +16,7 @@ posts:Post[] = [];
 userIsAuthenticated = false;
 private authStatusSub: Subscription;
 private PostSub: Subscription;
+userId: string;
 isLoading = false;
 currentPage = 1;
 totalPosts = 0;
@@ -28,10 +29,12 @@ pageSizeOptions = [1,2,5,10]
 
   ngOnInit() {
     this.isLoading = true;
+    this.userId = this.authService.getUserId();
     this.postService.getPosts(this.postPerPage, this.currentPage);
     this.PostSub =  this.postService.getPostUpdateListener()
     .subscribe((postData: {posts: Post[], postCount: number}) => {
       this.isLoading = false;
+      this.userId = this.authService.getUserId();
       this.posts = postData.posts;
       this.totalPosts = postData.postCount;
     });
