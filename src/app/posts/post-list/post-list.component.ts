@@ -56,7 +56,9 @@ pageSizeOptions = [1,2,5,10]
     this.postService.deletePost(postId).subscribe(() => {
       this.postService.getPosts(this.postPerPage, this.currentPage)
       // gets directly from the getPosts
-    })
+    }), () => {
+      this.isLoading = false;
+    }
   }
   ngOnDestroy() {
     this.PostSub.unsubscribe();

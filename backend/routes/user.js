@@ -2,7 +2,7 @@ const express = require("express");
 const User = require("../models/user");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const user = require("../models/user");
+
 
 const router = express.Router();
 
@@ -12,17 +12,20 @@ router.post("/signup", ( req, res, next) => {
       email: req.body.email,
       password: hash
     });
-    user.save().then(result => {
+    user
+    .save()
+    .then(result => {
       res.status(201).json({
-        message: 'User created!',
+        message: "User created!",
         result: result
-      })
-    }).catch(err => {
+      });
+    })
+    .catch(err => {
       res.status(500).json({
-        error: err
+       message : "Invalid authentication credentials!"
       });
     });
-  });
+});
 });
 
 router.post("/login", (req, res, next) => {
@@ -45,6 +48,7 @@ router.post("/login", (req, res, next) => {
        userId: fetchedUser._id},
       'secret_this_should_be_long',
       {expiresIn: '1h'});
+
       res.status(201).json({
         token: token,
         expiresIn: 3600,
@@ -52,7 +56,7 @@ router.post("/login", (req, res, next) => {
       })
   }).catch(err => {
     return res.status(401).json({
-      message: "Auth failed"
+      message: "Invalid authentication credentials!"
     })
   })
 })
