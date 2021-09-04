@@ -9,7 +9,7 @@ const userRoutes = require("./routes/user");
 const app = express(); // this is the cause of the problem
 mongoose
   .connect(
-    "mongodb+srv://fFg5gK95vqOhOnll:YSy4zdu4VDNqPvKR@cluster0.jgt2r.mongodb.net/Posts&w=majority",
+    "mongodb+srv://fFg5gK95vqOhOnll:" + process.env.MONGO_ATLAS_PW + "@cluster0.jgt2r.mongodb.net/Posts&w=majority",
     { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true }
   )
   .then(() => {
